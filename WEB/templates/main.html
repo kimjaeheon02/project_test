@@ -1,0 +1,31 @@
+<html>
+<head>
+  <title>success</title>
+  <script type="text/javascript" src="{{url_for('static', filename = 'logout.js')}}" >
+
+
+  </script>
+  <style>
+  * {
+    font-size: 16px;
+    font-family: Consolas, sans-serif;
+  }
+</style>
+</head>
+<body>
+  <h2>{{name}} 님 {{date.strftime("%Y/%m/%d %H:%M:%S")}} 접속</h2>
+  <input type = "button" value = "로그아웃" onclick="sayGoodbye()"/>
+
+  <form>
+    <p><input type="date"></p>
+    <p><input type="submit" value="Submit"></p>
+    <select name="year", id="year_select">
+    {% for i in range(int(date.year)-5, int(date.year))%}
+    <option value="year">{{i}}</option>
+    {% endfor %}
+    </select>
+
+  </form>
+
+</body>
+</html>
