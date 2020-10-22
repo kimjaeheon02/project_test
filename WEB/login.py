@@ -3,8 +3,6 @@ from database import connection, todo_list_dao
 import numpy as np
 from datetime import datetime
 
-today = datetime.today()
-
 app = Flask(__name__)
 app.secret_key = "amustring"
 
@@ -18,22 +16,26 @@ def main():
     try:
         id = int(request.form['id']) # request는 string으로 받기 때문에 int형으로 바꿔준다
         pw = request.form['pass']
+        today = datetime.today()
+        year = int(today.strftime("%Y"))
+        month = int(today.strftime("%m"))
+        day = int(today.strftime("%d"))
     except:
         return render_template('login_fail.html')
 
     content_list=todo_list_dao.get_todolist(id, pw) # Manager 테이블의 데이터를 2차원 배열로 가져옴
 
-    try:
-        if request.method == "POST" and content_list:
-            session['id'] = id
+    #try:
+    if request.method == "POST" and content_list:
+        session['id'] = id
 
-        if 'id' in session:
-            manager = content_list[0]
-            return render_template('main.html', name=manager, date=today)
-        else:
-            return render_template('login_fail.html')
-    except:
+    if 'id' in session:
+        manager = content_list[0]
+        return render_template('main.html', name=manager, year=year, month=month, day=day, today=today)
+    else:
         return render_template('login_fail.html')
+    #except:
+        #return render_template('login_fail.html')
 
 
 @app.route('/logout')
