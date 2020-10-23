@@ -6,20 +6,30 @@ from datetime import datetime
 app = Flask(__name__)
 app.secret_key = "amustring"
 
+#로그인 폼으로 이동
 @app.route('/')
 def login():
     return render_template("login2.html")
 
-
+#회원정보 DB 확인
 @app.route('/main', methods=["POST"])
 def main():
     try:
+        today_data=[]
         id = int(request.form['id']) # request는 string으로 받기 때문에 int형으로 바꿔준다
         pw = request.form['pass']
         today = datetime.today()
         year = int(today.strftime("%Y"))
         month = int(today.strftime("%m"))
         day = int(today.strftime("%d"))
+        today_data.append(today)
+        '''
+        today_data.append({
+            "today" : datetime.today(),
+            "year" : int(today.strftime("%Y")),
+            "month" : int(today.strftime("%m"))
+        })
+        '''
     except:
         return render_template('login_fail.html')
 
@@ -31,13 +41,13 @@ def main():
 
     if 'id' in session:
         manager = content_list[0]
-        return render_template('main.html', name=manager, year=year, month=month, day=day, today=today)
+        return render_template('main.html', name=manager, today=today_data, month=month, year=year, day=day)
     else:
         return render_template('login_fail.html')
     #except:
         #return render_template('login_fail.html')
 
-
+#로그아웃
 @app.route('/logout')
 def logout():
     if 'id' in session:
@@ -46,6 +56,13 @@ def logout():
     else:
         return render_template('session_error')
 
+@app.route('/daydata', methods=['POST'])
+def daydata():
+    value = request.form['theday']
+
+    return value
+
+#무쓸모
 @app.route('/profile')
 def profile():
     if 'email' in session:

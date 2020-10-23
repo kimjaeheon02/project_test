@@ -7,7 +7,7 @@ import numpy as np
 
 def get_todolist(id, pw):
     conn = connection.get_connection()
-    
+
     sql = '''
         select mID, mPW, mname
         from manager
@@ -28,10 +28,23 @@ def get_todolist(id, pw):
 
     conn.close
 
-    
+
     result=[]
     for list in data_list:
         if list['id'] == id and list['pw'] == pw:
             result.append(list['name'])
-    
+
     return result
+
+def imgInfo(year, month, day):
+    conn = connection.get_connection()
+
+    sql = '''
+        select mID, mPW, mname
+        from manager
+    '''
+
+    cursor = conn.cursor()
+    cursor.execute(sql)
+    row = cursor.fetchall()
+    return

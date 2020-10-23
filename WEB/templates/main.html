@@ -1,9 +1,7 @@
 <html>
 <head>
   <title>success</title>
-  <script type="text/javascript" src="{{url_for('static', filename = 'logout.js')}}" >
 
-  </script>
   <style>
   * {
     font-size: 16px;
@@ -13,27 +11,34 @@
 </style>
 </head>
 <body>
-  <h2>{{name}} 님 {{year}}년 {{month}}월 {{day}}일 접속</h2>
-  <input type = "button" value = "로그아웃" onclick="sayGoodbye()"/>
+  <div>
+    <a>{{name}} 님 {{year}}년 {{month}}월 {{day}}일 접속</a>
+    <input id="hw" type = "button" value = "로그아웃" />
+  </div>
 
-  <form>
-    <p><input type="date"></p>
-    <select name="year", id="year_select">
-    {% for i in range(1, 13)%}
-    {% if i == month %}
-    <option value="year" selected="selected">{{i}}</option>
-    {% else %}
-    <option value="year">{{i}}</option>
-    {% endif %}
-    {% endfor %}
-    </select>
-    <select name="month", id="month_select", onchange="last_day(this.value)">
-    {% for i in range(1, 31)%}
-    <option value="month">{{i}}</option>
-    {% endfor %}
-    </select>
 
-  </form>
+  <div>
+		<input type="date" name="theday" min="{{year-1}}-{{month}}-{{day}}" max="{{year}}-{{month}}-{{day}}" value="{{year}}-{{month}}-{{day}}">
+		<input type="button" value="확인" id="trans" >
+	</div>
 
+  <script>
+    window.onload = function(){
+      var hw = document.getElementById('hw');
+      hw.addEventListener('click', function(){
+          document.location.href="/logout"
+      })
+
+      }
+      window.onload = function(){
+        var hw = document.getElementById('hw');
+        hw.addEventListener('click', function(){
+            document.location.href="/logout"
+        })
+
+        }
+
+
+  </script>
 </body>
 </html>
